@@ -18,4 +18,9 @@ function moveButton() {
   // Redirect to a YouTube video (replace with your desired video URL)
   var youtubeUrl = "https://www.youtube.com/watch?v=E4WlUXrJgy4"; // Example YouTube URL (Rickroll)
   window.location.href = youtubeUrl; // Redirect to the YouTube video
+
+  // Redirect to a YouTube video (replace with your desired video URL)
+  var youtubeUrl = "https://youtu.be/AEcmLCEk_iw?si=DoBn69RDBjOhZ66C"; // Example YouTube URL (Rickroll)
+  window.location.href = youtubeUrl; // Redirect to the kanye vid
+
 }
