@@ -14,4 +14,8 @@ function moveButton() {
   button.style.position = 'absolute';
   button.style.left = randomX + 'px';
   button.style.top = randomY + 'px';
+
+  // Redirect to a YouTube video (replace with your desired video URL)
+  var youtubeUrl = "https://www.youtube.com/watch?v=E4WlUXrJgy4"; // Example YouTube URL (Rickroll)
+  window.location.href = youtubeUrl; // Redirect to the YouTube video
 }
