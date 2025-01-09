@@ -1,11 +1,10 @@
 body {
+  background-color: #E6E6FA;  /* Light Purple */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  body {
-  background-color: #ADD8E6;
 }
 
 button {
@@ -14,7 +13,7 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: #4CAF50;
-  color: purple;
+  background-color: #4CAF50;  /* Green background for the button */
+  color: blue;  /* Blue text color */
   transition: all 0.3s ease;
 }
