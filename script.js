@@ -1,9 +1,9 @@
 // Array of YouTube video IDs (YouTube video IDs only)
 var videoUrls = [
-  "https://youtu.be/_bxyZ6Olp6g",  // Example: Rickroll video ID
-  "https://www.youtube.com/watch?v=7ItPZgomPyg",     // Replace with your own video IDs
-  "https://www.youtube.com/watch?v=45VDHUmLFWs",
-  "https://www.youtube.com/watch?v=BBJa32lCaaY"
+  "_bxyZ6Olp6g",  // Example: Rickroll video ID
+  "7ItPZgomPyg",   // Replace with your own video IDs
+  "45VDHUmLFWs",
+  "BBJa32lCaaY"
 ];
 
 // Function to handle button click (Move or Redirect)
@@ -61,4 +61,3 @@ function onPlayerStateChange(event) {
 function onYouTubeIframeAPIReady() {
   // Player is ready, but we'll handle the actual video load when moveButton() is called
 }
-
