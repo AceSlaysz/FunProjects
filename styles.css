@@ -1,22 +1,32 @@
 body {
-  background-color: #E6E6FA;  /* Light Purple */
+  background-color: #E6E6FA;  /* Light Purple Background */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
+  flex-direction: column;
 }
 
-/* Button with Blue Text and Increased Size */
 button {
-  padding: 20px 40px; /* Adjust padding to make the button larger */
-  font-size: 24px; /* Make the text inside the button larger */
+  padding: 20px 40px;
+  font-size: 24px;
   cursor: pointer;
   border: none;
-  border-radius: 8px; /* Slightly rounded corners */
-  background-color: #4CAF50; /* Green background */
-  color: blue; /* Blue text color */
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: blue;
   transition: all 0.3s ease;
-  min-width: 200px; /* Ensure button has a consistent width */
-  min-height: 60px; /* Ensure button has a consistent height */
+  min-width: 200px;
+  min-height: 60px;
+}
+
+#videoContainer {
+  text-align: center;
+  display: none; /* Initially hidden */
+  margin-top: 20px;
+}
+
+#player {
+  margin-top: 20px;
 }
