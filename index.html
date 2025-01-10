@@ -7,8 +7,16 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <button id="moveButton" onclick="moveButton()">Don't Click Me!</button>
+  <!-- The button will be shown initially -->
+  <button id="moveButton" onclick="moveButton()">Click Me!</button>
 
+  <!-- This will be the YouTube video iframe (hidden initially) -->
+  <div id="videoContainer" style="display: none;">
+    <div id="player"></div>
+  </div>
+
+  <!-- Load YouTube Iframe API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
