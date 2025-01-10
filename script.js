@@ -1,26 +1,29 @@
-// Variable to store the YouTube player object
-var player;
+// Array of YouTube video IDs (YouTube video IDs only)
 var videoUrls = [
-  "https://www.youtube.com/watch?v=BBJa32lCaaY",  // Example: Rickroll
-  "https://www.youtube.com/watch?v=AEcmLCEk_iw",    // kanye
-  "https://www.youtube.com/watch?v=QDXJHht80-4", //smurf
-  "https://www.youtube.com/watch?v=98o73stegwQ"  // fam guy
+  "https://youtu.be/_bxyZ6Olp6g",  // Example: Rickroll video ID
+  "https://www.youtube.com/watch?v=7ItPZgomPyg",     // Replace with your own video IDs
+  "https://www.youtube.com/watch?v=45VDHUmLFWs",
+  "https://www.youtube.com/watch?v=BBJa32lCaaY"
 ];
 
 // Function to handle button click (Move or Redirect)
 function moveButton() {
-  // Decide if the button should redirect or move
-  var randomChoice = Math.random(); // Randomly decide
+  // Decide randomly if the button should redirect to a video or move on the screen
+  var randomChoice = Math.random(); // Randomly decide (0 to 1)
 
   if (randomChoice < 0.3) {
-    // Pick a random video URL
+    // 30% chance: Pick a random video URL and load it
     var randomIndex = Math.floor(Math.random() * videoUrls.length);
-    var randomUrl = videoUrls[randomIndex];
+    var randomVideoId = videoUrls[randomIndex];
     
-    // Show the video iframe and load the video
-    showVideo(randomUrl);
+    // Hide the button and show the video container
+    document.getElementById('moveButton').style.display = 'none';
+    document.getElementById('videoContainer').style.display = 'block';
+
+    // Show the video using YouTube Iframe API
+    showVideo(randomVideoId);
   } else {
-    // Move the button to a random position
+    // 70% chance: Move the button to a random position on the screen
     var button = document.getElementById('moveButton');
     var maxX = window.innerWidth - button.offsetWidth;
     var maxY = window.innerHeight - button.offsetHeight;
@@ -33,15 +36,8 @@ function moveButton() {
   }
 }
 
-// Function to show the video player
-function showVideo(videoUrl) {
-  // Hide the button and show the video container
-  document.getElementById('moveButton').style.display = 'none';
-  document.getElementById('videoContainer').style.display = 'block';
-
-  // Extract video ID from the URL
-  var videoId = videoUrl.split('v=')[1];
-
+// Function to show the YouTube video
+function showVideo(videoId) {
   // Create a new YouTube player
   player = new YT.Player('player', {
     height: '390',
@@ -57,7 +53,7 @@ function showVideo(videoUrl) {
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.ENDED) {
     // Redirect back to the original page after the video ends
-    window.location.replace("index.html"); // Force a redirect to the original page
+    window.location.replace("index.html"); // This will refresh the page and show the button again
   }
 }
 
@@ -65,3 +61,4 @@ function onPlayerStateChange(event) {
 function onYouTubeIframeAPIReady() {
   // Player is ready, but we'll handle the actual video load when moveButton() is called
 }
+
