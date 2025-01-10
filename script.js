@@ -6,9 +6,10 @@ var videoUrls = [
   "BBJa32lCaaY"
 ];
 
+var player; // Declare player globally
+
 // Function to handle button click (Move or Redirect)
 function moveButton() {
-  // Decide randomly if the button should redirect to a video or move on the screen
   var randomChoice = Math.random(); // Randomly decide (0 to 1)
 
   if (randomChoice < 0.3) {
@@ -38,6 +39,11 @@ function moveButton() {
 
 // Function to show the YouTube video
 function showVideo(videoId) {
+  // Check if the player already exists, if so, destroy and recreate
+  if (player) {
+    player.destroy(); // Destroy previous player instance
+  }
+
   // Create a new YouTube player
   player = new YT.Player('player', {
     height: '390',
@@ -57,7 +63,7 @@ function onPlayerStateChange(event) {
   }
 }
 
-// The API script will automatically call onYouTubeIframeAPIReady to load the player
+// YouTube API function that is called when the API script is loaded
 function onYouTubeIframeAPIReady() {
-  // Player is ready, but we'll handle the actual video load when moveButton() is called
+  console.log("YouTube Iframe API is ready!");
 }
