@@ -7,12 +7,13 @@ var videoUrls = [
 ];
 
 var player; // Declare player globally
+var isVideoPlaying = false; // Flag to prevent new video while one is playing
 
 // Function to handle button click (Move or Redirect)
 function moveButton() {
   var randomChoice = Math.random(); // Randomly decide (0 to 1)
 
-  if (randomChoice < 0.3) {
+  if (randomChoice < 0.3 && !isVideoPlaying) {
     // 30% chance: Pick a random video URL and load it
     var randomIndex = Math.floor(Math.random() * videoUrls.length);
     var randomVideoId = videoUrls[randomIndex];
@@ -23,6 +24,7 @@ function moveButton() {
 
     // Show the video using YouTube Iframe API
     showVideo(randomVideoId);
+    isVideoPlaying = true; // Set flag to prevent another video while one is playing
   } else {
     // 70% chance: Move the button to a random position on the screen
     var button = document.getElementById('moveButton');
@@ -58,8 +60,10 @@ function showVideo(videoId) {
 // Function to handle when the video finishes
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.ENDED) {
-    // Redirect back to the original page after the video ends
-    window.location.replace("index.html"); // This will refresh the page and show the button again
+    // Wait for 3 seconds (adjust the time as needed) before redirecting
+    setTimeout(function() {
+      window.location.replace("index.html"); // This will refresh the page and show the button again
+    }, 3000); // Delay of 3 seconds after the video ends
   }
 }
 
