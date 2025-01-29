@@ -1,9 +1,8 @@
 // Array of YouTube video IDs (YouTube video IDs only)
 var videoUrls = [
-  "_bxyZ6Olp6g",  // Example: Rickroll video ID
-  "7ItPZgomPyg",   // Replace with your own video IDs
-  "45VDHUmLFWs",
-  "BBJa32lCaaY"
+  "12qalpdhdD63SgBT", //rick roll_lost
+  "V-bYZtIfkk3QPtwS", //Josh_lost
+  "ca5-9EBrAZtT_1aH", //mcodnald win
 ];
 
 var player;
