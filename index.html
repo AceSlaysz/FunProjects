@@ -12,11 +12,16 @@
   <button id="moveButton" onmouseover="moveButton()" onclick="showVideo()">Click Me!</button>
 
   <div id="videoContainer">
-    <div id="player"></div>
+    <div id="player"> </div>
   </div>
 
-  <audio id="soundEffect" src="click-sound.mp3"></audio>
+  <!-- End Screen (Hidden Initially) -->
+<div id="endScreen" style="display: none; text-align: center;">
+    <h1 style="color: red; font-size: 40px;">Game Over!</h1>
+    <button onclick="startGame()" style="font-size: 20px;">Try Again</button>
+</div>
 
+  <audio id="soundEffect" src="click-sound.mp3"></audio>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
