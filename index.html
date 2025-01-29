@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Click Me Button</title>
+  <title>Catch Me If You Can!</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- The button will be shown initially -->
-  <button id="moveButton" onclick="moveButton()">Click Me!</button>
 
-  <!-- This will be the YouTube video iframe (hidden initially) -->
-  <div id="videoContainer" style="display: none;">
+  <h1>Try to Click the Button!</h1>
+  <button id="moveButton" onmouseover="moveButton()" onclick="showVideo()">Click Me!</button>
+
+  <div id="videoContainer">
     <div id="player"></div>
   </div>
 
-  <!-- Load YouTube Iframe API -->
+  <audio id="soundEffect" src="click-sound.mp3"></audio>
+
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
