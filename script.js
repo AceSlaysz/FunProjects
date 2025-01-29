@@ -6,47 +6,74 @@ var videoUrls = [
   "BBJa32lCaaY"
 ];
 
-var player; // Declare player globally
-var isVideoPlaying = false; // Flag to prevent new video while one is playing
+var player;
+var isVideoPlaying = false;
+var clickCount = 0; // Tracks how many times the button is clicked
 
-// Function to handle button click (Move or Redirect)
+// Sound effects
+var moveSound = new Audio("move.mp3"); // Sound when button moves
+var clickSound = new Audio("click.mp3"); // Sound when button is clicked
+
+// Funny messages when the button moves
+var taunts = [
+  "Too slow!",
+  "Try again!",
+  "You thought?!",
+  "Almost had it!",
+  "Not today!"
+];
+
+// Function to handle button interaction
 function moveButton() {
-  var randomChoice = Math.random(); // Randomly decide (0 to 1)
+  clickSound.play(); // Play click sound
+
+  var randomChoice = Math.random();
 
   if (randomChoice < 0.3 && !isVideoPlaying) {
-    // 30% chance: Pick a random video URL and load it
+    // 30% chance: Play a random video
     var randomIndex = Math.floor(Math.random() * videoUrls.length);
     var randomVideoId = videoUrls[randomIndex];
-    
-    // Hide the button and show the video container
+
     document.getElementById('moveButton').style.display = 'none';
     document.getElementById('videoContainer').style.display = 'block';
 
-    // Show the video using YouTube Iframe API
+    document.body.style.backgroundColor = "black"; // Flash effect
+    setTimeout(() => { document.body.style.backgroundColor = ""; }, 500);
+
     showVideo(randomVideoId);
-    isVideoPlaying = true; // Set flag to prevent another video while one is playing
+    isVideoPlaying = true;
   } else {
-    // 70% chance: Move the button to a random position on the screen
+    // 70% chance: Move the button
+    moveSound.play(); // Play movement sound
+
+    clickCount++; // Increase difficulty
     var button = document.getElementById('moveButton');
     var maxX = window.innerWidth - button.offsetWidth;
     var maxY = window.innerHeight - button.offsetHeight;
-    var randomX = Math.floor(Math.random() * maxX);
-    var randomY = Math.floor(Math.random() * maxY);
+
+    var randomX = Math.random() * maxX;
+    var randomY = Math.random() * maxY;
 
     button.style.position = 'absolute';
-    button.style.left = randomX + 'px';
-    button.style.top = randomY + 'px';
+    button.style.left = `${randomX}px`;
+    button.style.top = `${randomY}px`;
+
+    // Show a funny message
+    var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+    button.innerText = randomTaunt;
+
+    // Make it harder the more you try
+    button.style.fontSize = `${20 + clickCount * 2}px`;
+    button.style.padding = `${10 + clickCount}px`;
   }
 }
 
-// Function to show the YouTube video
+// Function to show YouTube video
 function showVideo(videoId) {
-  // Check if the player already exists, if so, destroy and recreate
   if (player) {
-    player.destroy(); // Destroy previous player instance
+    player.destroy();
   }
 
-  // Create a new YouTube player
   player = new YT.Player('player', {
     height: '390',
     width: '640',
@@ -60,14 +87,11 @@ function showVideo(videoId) {
 // Function to handle when the video finishes
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.ENDED) {
-    // Wait for 3 seconds (adjust the time as needed) before redirecting
-    setTimeout(function() {
-      window.location.replace("index.html"); // This will refresh the page and show the button again
-    }, 3000); // Delay of 3 seconds after the video ends
+    setTimeout(() => { window.location.replace("index.html"); }, 3000);
   }
 }
 
-// YouTube API function that is called when the API script is loaded
+// YouTube API function
 function onYouTubeIframeAPIReady() {
   console.log("YouTube Iframe API is ready!");
 }
