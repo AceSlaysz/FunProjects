@@ -20,7 +20,9 @@ var taunts = [
   "Try again!",
   "You thought?!",
   "Almost had it!",
-  "Not today!"
+  "Not today!",
+  " You're Slow!",
+  "Your mom is faster than this!"
 ];
 
 // Function to handle button interaction
