@@ -31,8 +31,8 @@ function startGame() {
     document.getElementById("levelText").innerText = "Level " + currentLevel;
 }
 
-// Function to handle button interaction
-function moveButton() {
+// Function to handle button interaction (click event)
+function handleButtonClick() {
     if (isVideoPlaying || isLevelComplete) return; // Stop interaction if video is playing or level is complete
 
     clickSound.play(); // Play click sound
@@ -154,27 +154,4 @@ function onPlayerStateChange(event) {
             showWinScreen(); // Show "You Won!" screen
         } else {
             loseSound.play(); // Play lose sound
-            showEndScreen(); // Show "Game Over" screen
-        }
-    }
-}
-
-// Function to show end title screen when you lose
-function showEndScreen() {
-    document.getElementById("videoContainer").style.display = "none";
-    document.getElementById("endScreen").style.display = "block";
-}
-
-// Function to show "You Won!" screen
-function showWinScreen() {
-    document.getElementById("videoContainer").style.display = "none";
-    document.getElementById("winScreen").style.display = "block";
-}
-
-// YouTube API function
-function onYouTubeIframeAPIReady() {
-    console.log("YouTube Iframe API is ready!");
-}
-
-// Start the game
-startGame();
+            showEndScreen(); // Show "Game Over" scree
