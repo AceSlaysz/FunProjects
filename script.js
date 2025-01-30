@@ -1,5 +1,5 @@
-var winVideo = "ca5-9EBrAZtT_1aH"; // McDonald's win video
-var loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Rick roll & Josh lose videos
+var winVideo = "KZzc-tNJ5p8"; // McDonald's win video
+var loseVideos = ["BBJa32lCaaY", "Z3J_MCbwaJ0"]; // Rick roll & Josh lose videos
 
 var player;
 var isVideoPlaying = false;
