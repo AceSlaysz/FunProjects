@@ -1,5 +1,5 @@
 var winVideo = "-8zDTsCirKU"; // Win win video (will play when player wins)
-var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8","dQw4w9WgXcQ"]; // McDonald's "Lose It, Win It" video & Josh lose video (for when player loses)
+var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8","Z3J_MCbwaJ0"]; // Rick rol, ronald, Josh lose video (for when player loses)
 var player;
 var isVideoPlaying = false;
 var clickCount = 0;
