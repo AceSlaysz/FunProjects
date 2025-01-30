@@ -6,6 +6,7 @@ var clickCount = 0;
 var currentLevel = 1;
 var gameTimer; // Timer for lightning round
 var timeLimit = 10000; // Default time limit (10 seconds for level 1)
+var requiredClicks = 9; // Default required clicks to advance
 
 // Sound effects
 var moveSound = new Audio("move.mp3");
@@ -62,7 +63,7 @@ function moveButton() {
         playLoseVideo(); // If time is up or player didn't click enough times, play lose video
     }, timeLimit);
 
-    if (clickCount >= 9) {
+    if (clickCount >= requiredClicks) {
         nextLevel();
     }
 }
@@ -77,7 +78,7 @@ function nextLevel() {
     } else {
         // In Level 3 (Lightning round): Check if they win or lose
         clearTimeout(gameTimer); // Stop the timer
-        if (clickCount >= 9) {
+        if (clickCount >= requiredClicks) {
             playWinVideo(); // If they clicked enough times, play the win video
         } else {
             playLoseVideo(); // Otherwise, play lose video
@@ -85,12 +86,14 @@ function nextLevel() {
     }
 }
 
-// Update time limit based on the level
+// Update time limit and required clicks based on the level
 function updateLevelSpeed() {
     if (currentLevel === 2) {
         timeLimit = 7000; // 7 seconds for level 2
+        requiredClicks = 10; // 10 clicks for level 2
     } else if (currentLevel === 3) {
         timeLimit = 5000; // 5 seconds for level 3 (lightning round)
+        requiredClicks = 12; // 12 clicks for level 3
     }
 }
 
@@ -130,26 +133,6 @@ function playLoseVideo() {
         height: "390",
         width: "640",
         videoId: randomLoseVideo,
-        events: {
-            "onStateChange": onPlayerStateChange
-        }
-    });
-}
-
-// Function to show YouTube video
-function playVideo(videoId) {
-    isVideoPlaying = true;
-    document.getElementById("moveButton").style.display = "none"; // Hide the button
-    document.getElementById("videoContainer").style.display = "block"; // Show video container
-
-    if (player) {
-        player.destroy();
-    }
-
-    player = new YT.Player("player", {
-        height: "390",
-        width: "640",
-        videoId: videoId,
         events: {
             "onStateChange": onPlayerStateChange
         }
