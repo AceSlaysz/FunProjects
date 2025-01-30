@@ -5,7 +5,7 @@ var isVideoPlaying = false;
 var clickCount = 0;
 var currentLevel = 1;
 var gameTimer; // Timer for lightning round
-var timeLimit = 20000; // Default time limit (20 seconds for level 1)
+var timeLimit = 10000; // Default time limit (10 seconds for level 1)
 
 // Sound effects
 var moveSound = new Audio("move.mp3"); 
@@ -18,19 +18,19 @@ function startGame() {
     clickCount = 0;
     currentLevel = 1;
     isVideoPlaying = false;
-    document.getElementById("moveButton").style.display = "block";
-    document.getElementById("videoContainer").style.display = "none";
-    document.getElementById("endScreen").style.display = "none";
-    document.getElementById("winScreen").style.display = "none";
-    document.getElementById("gameTitle").style.display = "block";
-    document.getElementById("levelText").style.display = "block";
+    document.getElementById("moveButton").style.display = "block"; // Show button again
+    document.getElementById("videoContainer").style.display = "none"; // Hide video container
+    document.getElementById("endScreen").style.display = "none"; // Hide game over screen
+    document.getElementById("winScreen").style.display = "none"; // Hide win screen
+    document.getElementById("gameTitle").style.display = "block"; // Show game title
+    document.getElementById("levelText").style.display = "block"; // Show level text
     moveButton(); // Start Level 1
     document.getElementById("levelText").innerText = "Level " + currentLevel;
 }
 
 // Function to handle button interaction
 function moveButton() {
-    if (isVideoPlaying) return;
+    if (isVideoPlaying) return; // Stop interaction if video is playing
 
     clickSound.play(); // Play click sound
     clickCount++;
@@ -46,7 +46,7 @@ function moveButton() {
     button.style.left = `${randomX}px`;
     button.style.top = `${randomY}px`;
 
-    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!", "Not today!", "Your mother is faster than this!"];
+    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!"];
     var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
     button.innerText = randomTaunt;
 
@@ -83,9 +83,9 @@ function nextLevel() {
 // Update time limit based on the level
 function updateLevelSpeed() {
     if (currentLevel === 2) {
-        timeLimit = 8000; // 8 seconds for level 2
+        timeLimit = 7000; // 7 seconds for level 2
     } else if (currentLevel === 3) {
-        timeLimit = 6000; // 6 seconds for level 3 (lightning round)
+        timeLimit = 5000; // 5 seconds for level 3 (lightning round)
     }
 }
 
@@ -103,8 +103,8 @@ function playLoseVideo() {
 // Function to show YouTube video
 function playVideo(videoId) {
     isVideoPlaying = true;
-    document.getElementById("moveButton").style.display = "none";
-    document.getElementById("videoContainer").style.display = "block";
+    document.getElementById("moveButton").style.display = "none"; // Hide the button
+    document.getElementById("videoContainer").style.display = "block"; // Show video container
 
     if (player) {
         player.destroy();
