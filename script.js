@@ -6,7 +6,7 @@ var clickCount = 0;
 var currentLevel = 1;
 var gameTimer;
 var timeLimit = 10000; // 10 seconds per level (can adjust)
-var requiredClicks = 9; // 9 to 10 clicks required to advance to the next round
+var requiredClicks = 9; // 9 clicks required to advance to the next round
 var isLevelComplete = false; // Flag to check if the level is complete
 
 var clickSound = new Audio("click.mp3"); // Click sound
@@ -79,6 +79,7 @@ function nextLevel() {
         currentLevel++;
         requiredClicks = 10; // Increase the number of required clicks for the next level
         isLevelComplete = false; // Reset level completion flag
+        document.getElementById("levelText").innerText = "Level " + currentLevel;
         startNextLevel();
     } else {
         // Lightning round (level 3)
