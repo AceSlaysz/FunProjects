@@ -5,7 +5,7 @@ var isVideoPlaying = false;
 var clickCount = 0;
 var currentLevel = 1;
 var gameTimer; // Timer for lightning round
-var timeLimit = 10000; // Default time limit (10 seconds for level 1)
+var timeLimit = 20000; // Default time limit (20 seconds for level 1)
 
 // Sound effects
 var moveSound = new Audio("move.mp3"); 
@@ -83,9 +83,9 @@ function nextLevel() {
 // Update time limit based on the level
 function updateLevelSpeed() {
     if (currentLevel === 2) {
-        timeLimit = 7000; // 7 seconds for level 2
+        timeLimit = 8000; // 8 seconds for level 2
     } else if (currentLevel === 3) {
-        timeLimit = 5000; // 5 seconds for level 3 (lightning round)
+        timeLimit = 6000; // 6 seconds for level 3 (lightning round)
     }
 }
 
