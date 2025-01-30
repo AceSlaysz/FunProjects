@@ -75,11 +75,12 @@ function nextLevel() {
     if (currentLevel < 3) {
         currentLevel++;
     } else {
-        // Lightning round: Must click within 5 seconds
+        // Lightning round: Must click within 8 seconds (you can change this value to your liking)
         clearTimeout(gameTimer);
-        gameTimer = setTimeout(playLoseVideo, 5000);
+        gameTimer = setTimeout(playLoseVideo, 8000); // 8000ms = 8 seconds
     }
 }
+
 
 // Function to play a win video
 function playWinVideo() {
