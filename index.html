@@ -3,29 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catch Me If You Can!</title>
+  <title>Catch Me...Button!</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
-  <div id="gameContainer">
-    <h1>Click the Button!</h1>
-    <div id="levelText">Level 1</div>
-    <button id="moveButton" onmouseover="moveButton()" onclick="showVideo()">Click Me!</button>
+  <h1 id="gameTitle">Click the Button!</h1>
+  <div id="levelText">Level 1</div>
+  <button id="moveButton" onmouseover="moveButton()">Click Me!</button>
 
-    <div id="videoContainer" style="display: none;">
-      <div id="player"></div>
-    </div>
+  <div id="videoContainer">
+    <div id="player"></div>
+  </div>
 
-    <div id="endScreen" style="display: none; text-align: center;">
-      <h1 style="color: red; font-size: 40px;">Game Over!</h1>
-      <button onclick="startGame()" style="font-size: 20px;">Try Again</button>
-    </div>
+  <!-- End Screen (Hidden Initially) -->
+  <div id="endScreen" style="display: none; text-align: center;">
+    <h1 style="color: red; font-size: 40px;">Game Over!</h1>
+    <button onclick="startGame()" style="font-size: 20px;">Try Again</button>
+  </div>
+
+  <!-- Win Screen (Hidden Initially) -->
+  <div id="winScreen" style="display: none; text-align: center;">
+    <h1 style="color: green; font-size: 40px;">You Won! 🎉</h1>
+    <button onclick="startGame()" style="font-size: 20px;">Play Again</button>
   </div>
 
   <audio id="soundEffect" src="click-sound.mp3"></audio>
-  <script src="script.js"></script>
 
+  <!-- YouTube API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <!-- Game Logic Script -->
+  <script src="script.js"></script>
 </body>
 </html>
