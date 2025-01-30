@@ -7,6 +7,7 @@ var currentLevel = 1;
 var gameTimer; // Timer for lightning round
 var timeLimit = 10000; // Default time limit (10 seconds for level 1)
 var requiredClicks = 9; // Default required clicks to advance
+var isLevelComplete = false; // Flag to track level completion
 
 // Sound effects
 var moveSound = new Audio("move.mp3");
@@ -19,6 +20,7 @@ function startGame() {
     clickCount = 0;
     currentLevel = 1;
     isVideoPlaying = false;
+    isLevelComplete = false; // Reset level complete flag
     document.getElementById("moveButton").style.display = "block"; // Show button again
     document.getElementById("videoContainer").style.display = "none"; // Hide video container
     document.getElementById("endScreen").style.display = "none"; // Hide game over screen
@@ -31,7 +33,7 @@ function startGame() {
 
 // Function to handle button interaction
 function moveButton() {
-    if (isVideoPlaying) return; // Stop interaction if video is playing
+    if (isVideoPlaying || isLevelComplete) return; // Stop interaction if video is playing or level is complete
 
     clickSound.play(); // Play click sound
     clickCount++;
@@ -60,11 +62,14 @@ function moveButton() {
     // Set time limit for the next button click depending on the level
     clearTimeout(gameTimer);
     gameTimer = setTimeout(function() {
-        playLoseVideo(); // If time is up or player didn't click enough times, play lose video
+        if (!isLevelComplete) {
+            playLoseVideo(); // If time is up or player didn't click enough times, play lose video
+        }
     }, timeLimit);
 
     if (clickCount >= requiredClicks) {
-        nextLevel();
+        isLevelComplete = true; // Mark the level as complete
+        nextLevel(); // Advance to the next level
     }
 }
 
@@ -73,11 +78,12 @@ function nextLevel() {
     if (currentLevel < 3) {
         currentLevel++;
         clickCount = 0; // Reset click count for the next level
+        isLevelComplete = false; // Reset level complete flag
         updateLevelSpeed();
         document.getElementById("levelText").innerText = "Level " + currentLevel;
+        moveButton(); // Start next level
     } else {
         // In Level 3 (Lightning round): Check if they win or lose
-        clearTimeout(gameTimer); // Stop the timer
         if (clickCount >= requiredClicks) {
             playWinVideo(); // If they clicked enough times, play the win video
         } else {
