@@ -69,8 +69,6 @@ function moveButton() {
         }
     }
 }
-
-// Function to progress through levels
 function nextLevel() {
     if (currentLevel < 3) {
         currentLevel++;
@@ -79,7 +77,11 @@ function nextLevel() {
         clearTimeout(gameTimer);
         gameTimer = setTimeout(playLoseVideo, 5000);
     }
+
+    // Update the level text on the page
+    document.getElementById("levelText").innerText = "Level " + currentLevel; // Dynamically display the current level
 }
+
 
 // Function to play a win video
 function playWinVideo() {
