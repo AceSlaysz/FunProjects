@@ -26,6 +26,7 @@ function startGame() {
     document.getElementById("moveButton").style.display = "block";  // Ensure button is visible
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "none";
+    document.getElementById("moveButton").innerText = "Click Me!"; // Set initial text
     moveButton(); // Start Level 1
 }
 
@@ -51,31 +52,32 @@ function moveButton() {
         var randomX = Math.random() * maxX;
         var randomY = Math.random() * maxY;
 
+        // Move the button to a random position on the screen
         button.style.position = "absolute";
         button.style.left = `${randomX}px`;
         button.style.top = `${randomY}px`;
 
         // Show a funny message if you are too slow
         var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-        button.innerText = randomTaunt;
+        button.innerText = randomTaunt;  // Change the button text to a taunt
 
         // Make it harder each time
         button.style.fontSize = `${20 + clickCount * 2}px`;
         button.style.padding = `${10 + clickCount}px`;
 
         // Start timeout to check if clicked too slowly
-        clearTimeout(buttonTimeout);  // Clear previous timeout
+        clearTimeout(buttonTimeout);  // Clear any previous timeout
         buttonTimeout = setTimeout(() => {
-            showTaunt();  // Show a taunt after the time runs out
-        }, 10000);  // 10 seconds timeout
+            showTaunt();  // Show a taunt after the timeout (e.g., 10 seconds)
+        }, 10000);  // Timeout is now 10 seconds (10000 milliseconds)
     }
 }
 
-// Function to show a taunt
+// Function to show a taunt if the button isn't clicked in time
 function showTaunt() {
     var button = document.getElementById("moveButton");
     var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-    button.innerText = randomTaunt;
+    button.innerText = randomTaunt;  // Display a random taunt after timeout
 }
 
 // Function to play a win video
