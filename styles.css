@@ -1,11 +1,3 @@
-/* Reset page margins and padding */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body styling */
 body {
   background-color: #E6E6FA;  /* Light Purple Background */
   display: flex;
@@ -13,63 +5,51 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  text-align: center;
-  flex-direction: column; /* Keeps content stacked vertically */
-}
-
-/* Wrapper for game content */
-#gameContainer {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
-/* Header styling */
-h1 {
+h1, #levelText {
   font-size: 30px;
+  text-align: center;
   margin-bottom: 20px;
-  color: black;  /* Make sure header text is visible */
+  font-family: 'Arial', sans-serif;
 }
 
-/* Level text styling */
-#levelText {
-  font-size: 40px;  /* Larger font size for the level */
-  font-weight: bold; /* Bold font for the level text */
-  color: black;  /* Set level text color to black */
-  margin-top: 20px;  /* Adds space between level text and other elements */
-}
-
-/* Button styling */
 button {
   padding: 20px 40px;
   font-size: 24px;
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  background-color: #4CAF50; /* Set button color to green */
-  color: white;  /* Button text color to white */
+  background-color: #4CAF50; /* Green color */
+  color: white;
   transition: all 0.3s ease;
   min-width: 200px;
   min-height: 60px;
-  margin-top: 20px;
 }
 
-/* Video container styling */
 #videoContainer {
   text-align: center;
   display: none; /* Initially hidden */
   margin-top: 20px;
 }
 
-/* Player styling */
 #player {
   margin-top: 20px;
 }
 
-/* End screen styling */
-#endScreen {
+#endScreen, #winScreen {
   text-align: center;
   display: none; /* Initially hidden */
+}
+
+#moveButton {
+  display: block;
+  position: relative;
+}
+
+#levelText {
+  font-size: 40px;
+  margin-top: 20px;
+  color: #333;
 }
