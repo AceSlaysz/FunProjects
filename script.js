@@ -1,13 +1,12 @@
-var winVideo = "KZzc-tNJ5p8"; // McDonald's win video
-var loseVideos = ["BBJa32lCaaY", "Z3J_MCbwaJ0"]; // Rick roll & Josh lose videos
+// Game Variables
+var winVideo = "KZzc-tNJ5p8"; // Video ID for winning
+var loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Lose video IDs
 
 var player;
 var isVideoPlaying = false;
 var clickCount = 0; // Tracks button clicks
 var currentLevel = 1; // Level progression
 var gameTimer; // Lightning round timer
-var buttonTimeout; // Timer to check if clicked too slow
-var buttonSpeed = 1000; // Initial speed of button movement in ms
 
 // Sound effects
 var moveSound = new Audio("move.mp3"); // Button movement sound
@@ -23,11 +22,10 @@ var taunts = [
 function startGame() {
     clickCount = 0;
     currentLevel = 1;
-    buttonSpeed = 1000; // Reset button speed
-    document.getElementById("moveButton").style.display = "block"; // Ensure button is visible
+    isVideoPlaying = false;
+    document.getElementById("moveButton").style.display = "block";
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "none";
-    document.getElementById("levelDisplay").innerText = "Level: 1"; // Show the level
     moveButton(); // Start Level 1
 }
 
@@ -36,6 +34,7 @@ function moveButton() {
     if (isVideoPlaying) return; // Stop interaction if video is playing
 
     clickSound.play(); // Play click sound
+
     var randomChoice = Math.random();
     
     if (randomChoice < 0.3) { 
@@ -53,37 +52,33 @@ function moveButton() {
         var randomX = Math.random() * maxX;
         var randomY = Math.random() * maxY;
 
-        // Move the button to a random position on the screen
         button.style.position = "absolute";
         button.style.left = `${randomX}px`;
         button.style.top = `${randomY}px`;
 
-        // Show a funny message if you are too slow
+        // Show a funny message
         var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-        button.innerText = randomTaunt;  // Change the button text to a taunt
+        button.innerText = randomTaunt;
 
-        // Make it harder each time (Increase speed and level)
+        // Make it harder each time
         button.style.fontSize = `${20 + clickCount * 2}px`;
         button.style.padding = `${10 + clickCount}px`;
 
-        // Increase button speed after every level (level 5 or higher)
         if (clickCount >= 5) {
-            currentLevel++;
-            document.getElementById("levelDisplay").innerText = `Level: ${currentLevel}`;
-            buttonSpeed = Math.max(200, buttonSpeed - 100); // Decrease speed but keep above 200ms
-            moveButton(); // Continue with the faster speed
-        } else {
-            // Make the button move again after the speed interval
-            setTimeout(moveButton, buttonSpeed);
+            nextLevel();
         }
     }
 }
 
-// Function to show a taunt if the button isn't clicked in time
-function showTaunt() {
-    var button = document.getElementById("moveButton");
-    var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-    button.innerText = randomTaunt;  // Display a random taunt after timeout
+// Function to progress through levels
+function nextLevel() {
+    if (currentLevel < 3) {
+        currentLevel++;
+    } else {
+        // Lightning round: Must click within 5 seconds
+        clearTimeout(gameTimer);
+        gameTimer = setTimeout(playLoseVideo, 5000);
+    }
 }
 
 // Function to play a win video
@@ -129,8 +124,6 @@ function onPlayerStateChange(event) {
         } else {
             showEndScreen(); // Show "Game Over" screen
         }
-        // Ensure the button reappears after the video ends
-        document.getElementById("moveButton").style.display = "block";
     }
 }
 
