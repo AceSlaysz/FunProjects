@@ -1,5 +1,5 @@
 var winVideo = "-8zDTsCirKU"; // Win video
-var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8","Z3J_MCbwaJ0"]; // Lose videos
+var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8", "Z3J_MCbwaJ0"]; // Lose videos
 var player;
 var isVideoPlaying = false;
 var clickCount = 0;
@@ -8,7 +8,7 @@ var gameTimer; // Timer for lightning round
 var timeLimit = 10000; // Default time limit (10 seconds for level 1)
 
 // Sound effects
-var moveSound = new Audio("move.mp3"); 
+var moveSound = new Audio("move.mp3");
 var clickSound = new Audio("click.mp3");
 var winSound = new Audio("win-sound.mp3");
 var loseSound = new Audio("lose-sound.mp3");
@@ -63,7 +63,10 @@ function moveButton() {
     // Set time limit for the next button click depending on the level
     clearTimeout(gameTimer);
     gameTimer = setTimeout(function() {
-        playLoseVideo();
+        // If the player runs out of time on level 3, only play the lose video
+        if (currentLevel === 3) {
+            playLoseVideo();
+        }
     }, timeLimit);
 }
 
@@ -75,8 +78,9 @@ function nextLevel() {
         updateLevelSpeed();
         document.getElementById("levelText").innerText = "Level " + currentLevel;
     } else {
-        clearTimeout(gameTimer);
-        playWinVideo();
+        // Level 3 - Lightning round: No win video, only play lose video if time is up
+        clearTimeout(gameTimer); // Stop the timer once you move to Level 3
+        playLoseVideo(); // Play lose video instead of win video in Level 3
     }
 }
 
@@ -89,9 +93,11 @@ function updateLevelSpeed() {
     }
 }
 
-// Function to play a win video
+// Function to play a win video (won't be called in level 3)
 function playWinVideo() {
-    playVideo(winVideo);
+    if (currentLevel !== 3) {
+        playVideo(winVideo);
+    }
 }
 
 // Function to play a random lose video
@@ -123,6 +129,7 @@ function playVideo(videoId) {
 // Function to handle when the video finishes
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
+        // After losing or winning, no need to go further in Level 3
         if (event.target.getVideoData().video_id === winVideo) {
             winSound.play(); // Play win sound
             showWinScreen(); // Show "You Won!" screen
