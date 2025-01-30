@@ -9,23 +9,25 @@
 </head>
 <body>
 
-  <h1>Click the Button!</h1>
-  <!-- Add a div to show the current level -->
-  <div id="levelText">Level 1</div> <!-- This will show the level -->
+  <div id="gameContainer"> <!-- Wrapper to center everything -->
+    <h1>Click the Button!</h1>
+    <div id="levelText">Level 1</div>
+    <button id="moveButton" onmouseover="moveButton()" onclick="showVideo()">Click Me!</button>
 
-  <button id="moveButton" onmouseover="moveButton()" onclick="showVideo()">Click Me!</button>
+    <!-- Video Container (Hidden Initially) -->
+    <div id="videoContainer" style="display: none;">
+      <div id="player"></div>
+    </div>
 
-  <div id="videoContainer" style="display:none;">
-    <div id="player"></div>
-  </div>
-
-  <!-- End Screen (Hidden Initially) -->
-  <div id="endScreen" style="display: none; text-align: center;">
+    <!-- End Screen (Hidden Initially) -->
+    <div id="endScreen" style="display: none; text-align: center;">
       <h1 style="color: red; font-size: 40px;">Game Over!</h1>
       <button onclick="startGame()" style="font-size: 20px;">Try Again</button>
+    </div>
   </div>
 
   <audio id="soundEffect" src="click-sound.mp3"></audio>
   <script src="script.js"></script>
+
 </body>
 </html>
