@@ -1,3 +1,4 @@
+/* Body styling */
 body {
   background-color: #E6E6FA;  /* Light Purple Background */
   display: flex;
@@ -8,12 +9,23 @@ body {
   flex-direction: column;
 }
 
+/* Header styling */
 h1 {
   font-size: 30px;
   text-align: center;
   margin-bottom: 20px;
 }
 
+/* Level text styling (added) */
+#levelText {
+  font-size: 40px;  /* Larger font size for the level */
+  font-weight: bold; /* Makes the text bold */
+  color: blue;  /* Set the color to something visible */
+  margin-top: 20px;  /* Adds space between level text and other elements */
+  text-align: center;  /* Centers the text */
+}
+
+/* Button styling */
 button {
   padding: 20px 40px;
   font-size: 24px;
@@ -27,16 +39,19 @@ button {
   min-height: 60px;
 }
 
+/* Video container styling */
 #videoContainer {
   text-align: center;
   display: none; /* Initially hidden */
   margin-top: 20px;
 }
 
+/* Player styling */
 #player {
   margin-top: 20px;
 }
 
+/* End screen styling */
 #endScreen {
   text-align: center;
   display: none; /* Initially hidden */
