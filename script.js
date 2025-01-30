@@ -7,6 +7,7 @@ var clickCount = 0; // Tracks button clicks
 var currentLevel = 1; // Level progression
 var gameTimer; // Lightning round timer
 var buttonTimeout; // Timer to check if clicked too slow
+var buttonSpeed = 1000; // Initial speed of button movement in ms
 
 // Sound effects
 var moveSound = new Audio("move.mp3"); // Button movement sound
@@ -22,11 +23,11 @@ var taunts = [
 function startGame() {
     clickCount = 0;
     currentLevel = 1;
-    isVideoPlaying = false;
-    document.getElementById("moveButton").style.display = "block";  // Ensure button is visible
+    buttonSpeed = 1000; // Reset button speed
+    document.getElementById("moveButton").style.display = "block"; // Ensure button is visible
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "none";
-    document.getElementById("moveButton").innerText = "Click Me!"; // Set initial text
+    document.getElementById("levelDisplay").innerText = "Level: 1"; // Show the level
     moveButton(); // Start Level 1
 }
 
@@ -61,15 +62,20 @@ function moveButton() {
         var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
         button.innerText = randomTaunt;  // Change the button text to a taunt
 
-        // Make it harder each time
+        // Make it harder each time (Increase speed and level)
         button.style.fontSize = `${20 + clickCount * 2}px`;
         button.style.padding = `${10 + clickCount}px`;
 
-        // Start timeout to check if clicked too slowly
-        clearTimeout(buttonTimeout);  // Clear any previous timeout
-        buttonTimeout = setTimeout(() => {
-            showTaunt();  // Show a taunt after the timeout (e.g., 10 seconds)
-        }, 10000);  // Timeout is now 10 seconds (10000 milliseconds)
+        // Increase button speed after every level (level 5 or higher)
+        if (clickCount >= 5) {
+            currentLevel++;
+            document.getElementById("levelDisplay").innerText = `Level: ${currentLevel}`;
+            buttonSpeed = Math.max(200, buttonSpeed - 100); // Decrease speed but keep above 200ms
+            moveButton(); // Continue with the faster speed
+        } else {
+            // Make the button move again after the speed interval
+            setTimeout(moveButton, buttonSpeed);
+        }
     }
 }
 
