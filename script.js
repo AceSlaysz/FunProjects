@@ -125,8 +125,11 @@ function onPlayerStateChange(event) {
         } else {
             showEndScreen(); // Show "Game Over" screen
         }
+        // Ensure the button reappears after the video ends
+        document.getElementById("moveButton").style.display = "block";
     }
 }
+
 
 // Function to show end title screen when you lose
 function showEndScreen() {
