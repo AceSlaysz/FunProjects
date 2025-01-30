@@ -1,19 +1,19 @@
-// Array of YouTube video IDs (YouTube video IDs only)
-const winVideo = "ca5-9EBrAZtT_1aH"; // McDonald's win video
-const loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Rick roll & Josh lose videos
+var winVideo = "ca5-9EBrAZtT_1aH"; // McDonald's win video
+var loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Rick roll & Josh lose videos
 
-let player;
-let isVideoPlaying = false;
-let clickCount = 0; // Tracks button clicks
-let currentLevel = 1; // Level progression
-let gameTimer; // Lightning round timer
+var player;
+var isVideoPlaying = false;
+var clickCount = 0; // Tracks button clicks
+var currentLevel = 1; // Level progression
+var gameTimer; // Lightning round timer
+var buttonTimeout; // Timer to check if clicked too slow
 
 // Sound effects
-const moveSound = new Audio("move.mp3"); // Button movement sound
-const clickSound = new Audio("click.mp3"); // Click sound
+var moveSound = new Audio("move.mp3"); // Button movement sound
+var clickSound = new Audio("click.mp3"); // Click sound
 
 // Funny messages when the button moves
-const taunts = [
+var taunts = [
     "Too slow!", "Try again!", "You thought?!", "Almost had it!",
     "Not today!", "You're Slow!", "Your mom is faster than this!"
 ];
@@ -29,12 +29,11 @@ function startGame() {
     moveButton(); // Start Level 1
 }
 
-
+// Function to handle button interaction
 function moveButton() {
     if (isVideoPlaying) return; // Stop interaction if video is playing
 
     clickSound.play(); // Play click sound
-
     var randomChoice = Math.random();
     
     if (randomChoice < 0.3) { 
@@ -56,7 +55,7 @@ function moveButton() {
         button.style.left = `${randomX}px`;
         button.style.top = `${randomY}px`;
 
-        // Show a funny message
+        // Show a funny message if you are too slow
         var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
         button.innerText = randomTaunt;
 
@@ -64,21 +63,19 @@ function moveButton() {
         button.style.fontSize = `${20 + clickCount * 2}px`;
         button.style.padding = `${10 + clickCount}px`;
 
-        if (clickCount >= 5) {
-            nextLevel();
-        }
+        // Start timeout to check if clicked too slowly
+        clearTimeout(buttonTimeout);  // Clear previous timeout
+        buttonTimeout = setTimeout(() => {
+            showTaunt();  // Show a taunt after the time runs out
+        }, 5000);  // 5 seconds timeout
     }
 }
 
-// Function to progress through levels
-function nextLevel() {
-    clearTimeout(gameTimer);  // Clear the previous timer
-    if (currentLevel < 3) {
-        currentLevel++;
-    } else {
-        // Lightning round: Must click within 5 seconds
-        gameTimer = setTimeout(playLoseVideo, 5000);
-    }
+// Function to show a taunt
+function showTaunt() {
+    var button = document.getElementById("moveButton");
+    var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+    button.innerText = randomTaunt;
 }
 
 // Function to play a win video
@@ -88,7 +85,7 @@ function playWinVideo() {
 
 // Function to play a random lose video
 function playLoseVideo() {
-    const randomLoseVideo = loseVideos[Math.floor(Math.random() * loseVideos.length)];
+    var randomLoseVideo = loseVideos[Math.floor(Math.random() * loseVideos.length)];
     playVideo(randomLoseVideo);
 }
 
@@ -103,7 +100,6 @@ function playVideo(videoId) {
 
     if (player) {
         player.destroy();
-        player = null; // Reset the player to prevent memory issues
     }
 
     player = new YT.Player("player", {
@@ -129,7 +125,6 @@ function onPlayerStateChange(event) {
         document.getElementById("moveButton").style.display = "block";
     }
 }
-
 
 // Function to show end title screen when you lose
 function showEndScreen() {
