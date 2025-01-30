@@ -1,19 +1,19 @@
 // Array of YouTube video IDs (YouTube video IDs only)
-var winVideo = "ca5-9EBrAZtT_1aH"; // McDonald's win video
-var loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Rick roll & Josh lose videos
+const winVideo = "ca5-9EBrAZtT_1aH"; // McDonald's win video
+const loseVideos = ["12qalpdhdD63SgBT", "V-bYZtIfkk3QPtwS"]; // Rick roll & Josh lose videos
 
-var player;
-var isVideoPlaying = false;
-var clickCount = 0; // Tracks button clicks
-var currentLevel = 1; // Level progression
-var gameTimer; // Lightning round timer
+let player;
+let isVideoPlaying = false;
+let clickCount = 0; // Tracks button clicks
+let currentLevel = 1; // Level progression
+let gameTimer; // Lightning round timer
 
 // Sound effects
-var moveSound = new Audio("move.mp3"); // Button movement sound
-var clickSound = new Audio("click.mp3"); // Click sound
+const moveSound = new Audio("move.mp3"); // Button movement sound
+const clickSound = new Audio("click.mp3"); // Click sound
 
 // Funny messages when the button moves
-var taunts = [
+const taunts = [
     "Too slow!", "Try again!", "You thought?!", "Almost had it!",
     "Not today!", "You're Slow!", "Your mom is faster than this!"
 ];
@@ -35,7 +35,7 @@ function moveButton() {
 
     clickSound.play(); // Play click sound
 
-    var randomChoice = Math.random();
+    const randomChoice = Math.random();
     
     if (randomChoice < 0.3) { 
         // 30% chance: Play a random lose video
@@ -45,24 +45,24 @@ function moveButton() {
         moveSound.play(); // Play movement sound
         clickCount++;
 
-        var button = document.getElementById("moveButton");
-        var maxX = window.innerWidth - button.offsetWidth;
-        var maxY = window.innerHeight - button.offsetHeight;
+        const button = document.getElementById("moveButton");
+        const maxX = window.innerWidth - button.offsetWidth;
+        const maxY = window.innerHeight - button.offsetHeight;
 
-        var randomX = Math.random() * maxX;
-        var randomY = Math.random() * maxY;
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
 
         button.style.position = "absolute";
         button.style.left = `${randomX}px`;
         button.style.top = `${randomY}px`;
 
         // Show a funny message
-        var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+        const randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
         button.innerText = randomTaunt;
 
-        // Make it harder each time
-        button.style.fontSize = `${20 + clickCount * 2}px`;
-        button.style.padding = `${10 + clickCount}px`;
+        // Make it harder each time by limiting the max size
+        button.style.fontSize = `${Math.min(40, 20 + clickCount * 2)}px`; // Max font size 40px
+        button.style.padding = `${Math.min(30, 10 + clickCount)}px`; // Max padding 30px
 
         if (clickCount >= 5) {
             nextLevel();
@@ -72,11 +72,11 @@ function moveButton() {
 
 // Function to progress through levels
 function nextLevel() {
+    clearTimeout(gameTimer);  // Clear the previous timer
     if (currentLevel < 3) {
         currentLevel++;
     } else {
         // Lightning round: Must click within 5 seconds
-        clearTimeout(gameTimer);
         gameTimer = setTimeout(playLoseVideo, 5000);
     }
 }
@@ -88,7 +88,7 @@ function playWinVideo() {
 
 // Function to play a random lose video
 function playLoseVideo() {
-    var randomLoseVideo = loseVideos[Math.floor(Math.random() * loseVideos.length)];
+    const randomLoseVideo = loseVideos[Math.floor(Math.random() * loseVideos.length)];
     playVideo(randomLoseVideo);
 }
 
@@ -103,6 +103,7 @@ function playVideo(videoId) {
 
     if (player) {
         player.destroy();
+        player = null; // Reset the player to prevent memory issues
     }
 
     player = new YT.Player("player", {
