@@ -1,5 +1,5 @@
 body {
-  background-color: #E6E6FA;  /* Light Purple Background */
+  background-color: #E6E6FA; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  background-color: #4CAF50; /* Green color */
+  background-color: #4CAF50; 
   color: white;
   transition: all 0.3s ease;
   min-width: 200px;
@@ -30,7 +30,7 @@ button {
 
 #videoContainer {
   text-align: center;
-  display: none; /* Initially hidden */
+  display: none; 
   margin-top: 20px;
 }
 
@@ -40,7 +40,7 @@ button {
 
 #endScreen, #winScreen {
   text-align: center;
-  display: none; /* Initially hidden */
+  display: none; 
 }
 
 #moveButton {
