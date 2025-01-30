@@ -16,16 +16,16 @@ h1, #levelText {
 }
 
 button {
-  padding: 40px 40px;
-  font-size: 24px;
+  padding: 30px 60px; /* Larger padding for bigger button */
+  font-size: 28px; /* Larger font size */
   cursor: pointer;
   border: none;
   border-radius: 8px;
   background-color: #4CAF50; /* Green color */
   color: white;
   transition: all 0.3s ease;
-  min-width: 200px;
-  min-height: 60px;
+  min-width: 250px;
+  min-height: 80px;
 }
 
 #videoContainer {
