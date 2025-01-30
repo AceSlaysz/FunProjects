@@ -1,16 +1,17 @@
-var winVideo = "-8zDTsCirKU"; // Win win video (will play when player wins)
-var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8","Z3J_MCbwaJ0"]; // Rick rol, ronald, Josh lose video (for when player loses)
+var winVideo = "-8zDTsCirKU"; // Win video
+var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8","Z3J_MCbwaJ0"]; // Lose videos
 var player;
 var isVideoPlaying = false;
 var clickCount = 0;
 var currentLevel = 1;
 var gameTimer; // Timer for lightning round
+var timeLimit = 10000; // Default time limit (10 seconds for level 1)
 
 // Sound effects
-var moveSound = new Audio("move.mp3"); // Button movement sound
-var clickSound = new Audio("click.mp3"); // Click sound
-var winSound = new Audio("win-sound.mp3"); // Sound for winning
-var loseSound = new Audio("lose-sound.mp3"); // Sound for losing
+var moveSound = new Audio("move.mp3"); 
+var clickSound = new Audio("click.mp3");
+var winSound = new Audio("win-sound.mp3");
+var loseSound = new Audio("lose-sound.mp3");
 
 // Function to start the game
 function startGame() {
@@ -29,58 +30,64 @@ function startGame() {
 
 // Function to handle button interaction
 function moveButton() {
-    if (isVideoPlaying) return; // Stop interaction if video is playing
+    if (isVideoPlaying) return;
 
     clickSound.play(); // Play click sound
+    clickCount++;
 
-    var randomChoice = Math.random();
-    
-    if (randomChoice < 0.3) { 
-        // 30% chance: Play a random lose video
-        playLoseVideo();
-    } else {
-        // 70% chance: Move the button
-        moveSound.play(); // Play movement sound
-        clickCount++;
+    var button = document.getElementById("moveButton");
+    var maxX = window.innerWidth - button.offsetWidth;
+    var maxY = window.innerHeight - button.offsetHeight;
 
-        var button = document.getElementById("moveButton");
-        var maxX = window.innerWidth - button.offsetWidth;
-        var maxY = window.innerHeight - button.offsetHeight;
+    var randomX = Math.random() * maxX;
+    var randomY = Math.random() * maxY;
 
-        var randomX = Math.random() * maxX;
-        var randomY = Math.random() * maxY;
-        
-        button.style.position = "absolute";
-        button.style.left = `${randomX}px`;
-        button.style.top = `${randomY}px`;
+    button.style.position = "absolute";
+    button.style.left = `${randomX}px`;
+    button.style.top = `${randomY}px`;
 
-        var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!"];
-        var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-        button.innerText = randomTaunt;
+    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!"];
+    var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+    button.innerText = randomTaunt;
 
-        button.style.fontSize = `${20 + clickCount * 2}px`;
-        button.style.padding = `${10 + clickCount}px`;
+    button.style.fontSize = `${20 + clickCount * 2}px`;
+    button.style.padding = `${10 + clickCount}px`;
 
-        // Update level text
-        document.getElementById("levelText").innerText = "Level " + currentLevel;
+    // Update level text
+    document.getElementById("levelText").innerText = "Level " + currentLevel;
 
-        if (clickCount >= 5) {
-            nextLevel();
-        }
+    if (clickCount >= 9) {
+        nextLevel();
     }
+
+    // Set time limit for the next button click depending on the level
+    clearTimeout(gameTimer);
+    gameTimer = setTimeout(function() {
+        playLoseVideo();
+    }, timeLimit);
 }
 
 // Function to progress through levels
 function nextLevel() {
     if (currentLevel < 3) {
         currentLevel++;
+        clickCount = 0; // Reset click count for the next level
+        updateLevelSpeed();
+        document.getElementById("levelText").innerText = "Level " + currentLevel;
     } else {
-        // Lightning round: Must click within 8 seconds (you can change this value to your liking)
         clearTimeout(gameTimer);
-        gameTimer = setTimeout(playLoseVideo, 8000); // 8000ms = 8 seconds
+        playWinVideo();
     }
 }
 
+// Update time limit based on the level
+function updateLevelSpeed() {
+    if (currentLevel === 2) {
+        timeLimit = 7000; // 7 seconds for level 2
+    } else if (currentLevel === 3) {
+        timeLimit = 5000; // 5 seconds for level 3 (lightning round)
+    }
+}
 
 // Function to play a win video
 function playWinVideo() {
