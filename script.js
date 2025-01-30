@@ -5,12 +5,12 @@ var isVideoPlaying = false;
 var clickCount = 0;
 var currentLevel = 1;
 var gameTimer;
-var timeLimit = 10000; // 10 seconds per level (can adjust)
+var timeLimit = 10000; // 10 seconds per level
 var requiredClicks = 9; // 9 clicks required to advance to the next round
 var isLevelComplete = false; // Flag to check if the level is complete
 
-var clickSound = new Audio("click.mp3"); // Click sound
-var moveSound = new Audio("move.mp3"); // Movement sound
+var clickSound = new Audio("click-sound.mp3"); // Click sound
+var moveSound = new Audio("move-sound.mp3"); // Movement sound
 var winSound = new Audio("win-sound.mp3"); // Win sound
 var loseSound = new Audio("lose-sound.mp3"); // Lose sound
 
@@ -37,8 +37,29 @@ function handleButtonClick() {
     clickSound.play(); // Play click sound
     clickCount++;
 
-    var button = document.getElementById("moveButton");
+    // Move the button to a random position
+    moveButton();
 
+    // If the required number of clicks is reached, progress to the next level
+    if (clickCount >= requiredClicks) {
+        isLevelComplete = true; // Mark the level as complete
+        nextLevel(); // Advance to the next level
+    }
+
+    // Set timeout for losing condition if not clicked enough
+    clearTimeout(gameTimer);
+    gameTimer = setTimeout(function() {
+        if (!isLevelComplete) {
+            playLoseVideo(); // If time is up or player didn't click enough times, play lose video
+        }
+    }, timeLimit);
+}
+
+// Function to move the button to a random position
+function moveButton() {
+    if (isVideoPlaying || isLevelComplete) return;
+
+    var button = document.getElementById("moveButton");
     var maxX = window.innerWidth - button.offsetWidth;
     var maxY = window.innerHeight - button.offsetHeight;
 
@@ -48,29 +69,6 @@ function handleButtonClick() {
     button.style.position = "absolute";
     button.style.left = `${randomX}px`;
     button.style.top = `${randomY}px`;
-
-    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!"];
-    var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
-    button.innerText = randomTaunt;
-
-    button.style.fontSize = `${20 + clickCount * 2}px`;
-    button.style.padding = `${10 + clickCount}px`;
-
-    // Update level text
-    document.getElementById("levelText").innerText = "Level " + currentLevel;
-
-    // Set time limit for the next button click
-    clearTimeout(gameTimer);
-    gameTimer = setTimeout(function() {
-        if (!isLevelComplete) {
-            playLoseVideo(); // If time is up or player didn't click enough times, play lose video
-        }
-    }, timeLimit);
-
-    if (clickCount >= requiredClicks) {
-        isLevelComplete = true; // Mark the level as complete
-        nextLevel(); // Advance to the next level (only if clicked enough)
-    }
 }
 
 // Function to progress through levels
@@ -110,3 +108,52 @@ function playLoseVideo() {
 // Function to show YouTube video
 function playVideo(videoId) {
     isVideoPlaying = true;
+    document.getElementById("moveButton").style.display = "none";
+    document.getElementById("videoContainer").style.display = "block";
+
+    if (player) {
+        player.destroy();
+    }
+
+    player = new YT.Player("player", {
+        height: "390",
+        width: "640",
+        videoId: videoId,
+        events: {
+            "onStateChange": onPlayerStateChange
+        }
+    });
+}
+
+// Function to handle when the video finishes
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+        if (event.target.getVideoData().video_id === winVideo) {
+            winSound.play(); // Play win sound
+            showWinScreen(); // Show "You Won!" screen
+        } else {
+            loseSound.play(); // Play lose sound
+            showEndScreen(); // Show "Game Over" screen
+        }
+    }
+}
+
+// Function to show end title screen when you lose
+function showEndScreen() {
+    document.getElementById("videoContainer").style.display = "none";
+    document.getElementById("endScreen").style.display = "block";
+}
+
+// Function to show "You Won!" screen
+function showWinScreen() {
+    document.getElementById("videoContainer").style.display = "none";
+    document.getElementById("winScreen").style.display = "block";
+}
+
+// YouTube API function
+function onYouTubeIframeAPIReady() {
+    console.log("YouTube Iframe API is ready!");
+}
+
+// Start the game
+startGame();
