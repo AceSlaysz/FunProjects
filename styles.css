@@ -7,12 +7,12 @@ body {
   height: 100vh;
   margin: 0;
   flex-direction: column;
+  text-align: center; /*text centered*/
 }
 
 /* Header styling */
 h1 {
   font-size: 30px;
-  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -22,7 +22,6 @@ h1 {
   font-weight: bold; /* Makes the text bold */
   color: blue;  /* Set the color to something visible */
   margin-top: 20px;  /* Adds space between level text and other elements */
-  text-align: center;  /* Centers the text */
 }
 
 /* Button styling */
@@ -32,8 +31,8 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  background-color: #4CAF50;
-  color: blue;
+  background-color: #4CAF50; /*green bg*/
+  color: black; /*set text to black*/
   transition: all 0.3s ease;
   min-width: 200px;
   min-height: 60px;
