@@ -1,5 +1,5 @@
-var winVideo = "BBJa32lCaaY"; // YouTube video ID for the win video
-var loseVideos = ["Z3J_MCbwaJ0", "KZzc-tNJ5p8"]; // Lose video IDs (You can add more here)
+var winVideo = "Z3J_MCbwaJ0"; // YouTube video ID for the win video
+var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8"]; // Lose video IDs (You can add more here)
 var player;
 var isVideoPlaying = false;
 var clickCount = 0;
