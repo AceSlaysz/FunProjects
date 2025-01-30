@@ -56,18 +56,15 @@ function moveButton() {
     // Update level text
     document.getElementById("levelText").innerText = "Level " + currentLevel;
 
-    if (clickCount >= 9) {
-        nextLevel();
-    }
-
     // Set time limit for the next button click depending on the level
     clearTimeout(gameTimer);
     gameTimer = setTimeout(function() {
-        // If the player runs out of time on level 3, only play the lose video
-        if (currentLevel === 3) {
-            playLoseVideo();
-        }
+        playLoseVideo(); // If time is up or player didn't click enough times, play lose video
     }, timeLimit);
+
+    if (clickCount >= 9) {
+        nextLevel();
+    }
 }
 
 // Function to progress through levels
@@ -78,9 +75,13 @@ function nextLevel() {
         updateLevelSpeed();
         document.getElementById("levelText").innerText = "Level " + currentLevel;
     } else {
-        // Level 3 - Lightning round: No win video, only play lose video if time is up
-        clearTimeout(gameTimer); // Stop the timer once you move to Level 3
-        playLoseVideo(); // Play lose video instead of win video in Level 3
+        // In Level 3 (Lightning round): Check if they win or lose
+        clearTimeout(gameTimer); // Stop the timer
+        if (clickCount >= 9) {
+            playWinVideo(); // If they clicked enough times, play the win video
+        } else {
+            playLoseVideo(); // Otherwise, play lose video
+        }
     }
 }
 
@@ -93,17 +94,46 @@ function updateLevelSpeed() {
     }
 }
 
-// Function to play a win video (won't be called in level 3)
+// Function to play a win video
 function playWinVideo() {
-    if (currentLevel !== 3) {
-        playVideo(winVideo);
+    isVideoPlaying = true;
+    document.getElementById("moveButton").style.display = "none"; // Hide the button
+    document.getElementById("videoContainer").style.display = "block"; // Show video container
+
+    if (player) {
+        player.destroy();
     }
+
+    player = new YT.Player("player", {
+        height: "390",
+        width: "640",
+        videoId: winVideo,
+        events: {
+            "onStateChange": onPlayerStateChange
+        }
+    });
 }
 
 // Function to play a random lose video
 function playLoseVideo() {
+    isVideoPlaying = true;
     var randomLoseVideo = loseVideos[Math.floor(Math.random() * loseVideos.length)];
-    playVideo(randomLoseVideo);
+
+    document.getElementById("moveButton").style.display = "none"; // Hide the button
+    document.getElementById("videoContainer").style.display = "block"; // Show video container
+
+    if (player) {
+        player.destroy();
+    }
+
+    player = new YT.Player("player", {
+        height: "390",
+        width: "640",
+        videoId: randomLoseVideo,
+        events: {
+            "onStateChange": onPlayerStateChange
+        }
+    });
 }
 
 // Function to show YouTube video
@@ -129,7 +159,7 @@ function playVideo(videoId) {
 // Function to handle when the video finishes
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
-        // After losing or winning, no need to go further in Level 3
+        // After losing or winning, reset the game and show the respective screen
         if (event.target.getVideoData().video_id === winVideo) {
             winSound.play(); // Play win sound
             showWinScreen(); // Show "You Won!" screen
