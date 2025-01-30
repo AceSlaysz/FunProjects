@@ -1,3 +1,10 @@
+/* Reset page margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Body styling */
 body {
   background-color: #E6E6FA;  /* Light Purple Background */
@@ -6,21 +13,31 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  text-align: center;  /* Centers text */
+  flex-direction: column; /* Keeps content stacked vertically */
+}
+
+/* Wrapper for game content */
+#gameContainer {
+  display: flex;
   flex-direction: column;
-  text-align: center; /*text centered*/
+  align-items: center;  /* Centers the content horizontally */
+  justify-content: center;  /* Centers the content vertically */
+  text-align: center;  /* Ensure text is centered */
 }
 
 /* Header styling */
 h1 {
   font-size: 30px;
   margin-bottom: 20px;
+  color: black;  /* Make sure header text is visible */
 }
 
-/* Level text styling (added) */
+/* Level text styling */
 #levelText {
   font-size: 40px;  /* Larger font size for the level */
-  font-weight: bold; /* Makes the text bold */
-  color: blue;  /* Set the color to something visible */
+  font-weight: bold; /* Bold font for the level text */
+  color: black;  /* Set level text color to black */
   margin-top: 20px;  /* Adds space between level text and other elements */
 }
 
@@ -31,11 +48,12 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  background-color: #4CAF50; /*green bg*/
-  color: black; /*set text to black*/
+  background-color: #4CAF50; /* Set button color to green */
+  color: white;  /* Button text color to white */
   transition: all 0.3s ease;
   min-width: 200px;
   min-height: 60px;
+  margin-top: 20px;
 }
 
 /* Video container styling */
