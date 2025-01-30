@@ -1,10 +1,16 @@
-var winVideo = "Z3J_MCbwaJ0"; // YouTube video ID for the win video
-var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8"]; // Lose video IDs (You can add more here)
+var winVideo = "dQw4w9WgXcQ"; // Rick Roll video (will play when player wins)
+var loseVideos = ["BBJa32lCaaY", "KZzc-tNJ5p8"]; // McDonald's "Lose It, Win It" video & Josh lose video (for when player loses)
 var player;
 var isVideoPlaying = false;
 var clickCount = 0;
 var currentLevel = 1;
 var gameTimer; // Timer for lightning round
+
+// Sound effects
+var moveSound = new Audio("move.mp3"); // Button movement sound
+var clickSound = new Audio("click.mp3"); // Click sound
+var winSound = new Audio("win-sound.mp3"); // Sound for winning
+var loseSound = new Audio("lose-sound.mp3"); // Sound for losing
 
 // Function to start the game
 function startGame() {
@@ -14,6 +20,9 @@ function startGame() {
     document.getElementById("moveButton").style.display = "block";
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "none";
+    document.getElementById("winScreen").style.display = "none";
+    document.getElementById("gameTitle").style.display = "block";
+    document.getElementById("levelText").style.display = "block";
     moveButton(); // Start Level 1
     document.getElementById("levelText").innerText = "Level " + currentLevel;
 }
@@ -22,6 +31,8 @@ function startGame() {
 function moveButton() {
     if (isVideoPlaying) return; // Stop interaction if video is playing
 
+    clickSound.play(); // Play click sound
+
     var randomChoice = Math.random();
     
     if (randomChoice < 0.3) { 
@@ -29,10 +40,13 @@ function moveButton() {
         playLoseVideo();
     } else {
         // 70% chance: Move the button
+        moveSound.play(); // Play movement sound
         clickCount++;
+
         var button = document.getElementById("moveButton");
         var maxX = window.innerWidth - button.offsetWidth;
         var maxY = window.innerHeight - button.offsetHeight;
+
         var randomX = Math.random() * maxX;
         var randomY = Math.random() * maxY;
         
@@ -102,9 +116,10 @@ function playVideo(videoId) {
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
         if (event.target.getVideoData().video_id === winVideo) {
-            alert("YOU WIN! 🎉");
-            startGame(); // Restart the game
+            winSound.play(); // Play win sound
+            showWinScreen(); // Show "You Won!" screen
         } else {
+            loseSound.play(); // Play lose sound
             showEndScreen(); // Show "Game Over" screen
         }
     }
@@ -114,6 +129,12 @@ function onPlayerStateChange(event) {
 function showEndScreen() {
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "block";
+}
+
+// Function to show "You Won!" screen
+function showWinScreen() {
+    document.getElementById("videoContainer").style.display = "none";
+    document.getElementById("winScreen").style.display = "block";
 }
 
 // YouTube API function
