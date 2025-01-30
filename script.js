@@ -23,11 +23,12 @@ function startGame() {
     clickCount = 0;
     currentLevel = 1;
     isVideoPlaying = false;
-    document.getElementById("moveButton").style.display = "block";
+    document.getElementById("moveButton").style.display = "block";  // Ensure button is visible
     document.getElementById("videoContainer").style.display = "none";
     document.getElementById("endScreen").style.display = "none";
     moveButton(); // Start Level 1
 }
+
 
 // Function to handle button interaction
 function moveButton() {
