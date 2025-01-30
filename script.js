@@ -67,7 +67,7 @@ function moveButton() {
         clearTimeout(buttonTimeout);  // Clear previous timeout
         buttonTimeout = setTimeout(() => {
             showTaunt();  // Show a taunt after the time runs out
-        }, 5000);  // 5 seconds timeout
+        }, 10000);  // 10 seconds timeout
     }
 }
 
