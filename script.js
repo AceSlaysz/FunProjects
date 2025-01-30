@@ -46,7 +46,7 @@ function moveButton() {
     button.style.left = `${randomX}px`;
     button.style.top = `${randomY}px`;
 
-    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!"];
+    var taunts = ["Too slow!", "Try again!", "You thought?!", "Almost had it!", "Not today!", "Your mother is faster than this!"];
     var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
     button.innerText = randomTaunt;
 
