@@ -30,13 +30,12 @@ function startGame() {
 }
 
 
-// Function to handle button interaction
 function moveButton() {
     if (isVideoPlaying) return; // Stop interaction if video is playing
 
     clickSound.play(); // Play click sound
 
-    const randomChoice = Math.random();
+    var randomChoice = Math.random();
     
     if (randomChoice < 0.3) { 
         // 30% chance: Play a random lose video
@@ -46,24 +45,24 @@ function moveButton() {
         moveSound.play(); // Play movement sound
         clickCount++;
 
-        const button = document.getElementById("moveButton");
-        const maxX = window.innerWidth - button.offsetWidth;
-        const maxY = window.innerHeight - button.offsetHeight;
+        var button = document.getElementById("moveButton");
+        var maxX = window.innerWidth - button.offsetWidth;
+        var maxY = window.innerHeight - button.offsetHeight;
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
+        var randomX = Math.random() * maxX;
+        var randomY = Math.random() * maxY;
 
         button.style.position = "absolute";
         button.style.left = `${randomX}px`;
         button.style.top = `${randomY}px`;
 
         // Show a funny message
-        const randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
+        var randomTaunt = taunts[Math.floor(Math.random() * taunts.length)];
         button.innerText = randomTaunt;
 
-        // Make it harder each time by limiting the max size
-        button.style.fontSize = `${Math.min(40, 20 + clickCount * 2)}px`; // Max font size 40px
-        button.style.padding = `${Math.min(30, 10 + clickCount)}px`; // Max padding 30px
+        // Make it harder each time
+        button.style.fontSize = `${20 + clickCount * 2}px`;
+        button.style.padding = `${10 + clickCount}px`;
 
         if (clickCount >= 5) {
             nextLevel();
