@@ -69,11 +69,11 @@ function moveButton() {
 
     if (clickCount >= requiredClicks) {
         isLevelComplete = true; // Mark the level as complete
-        nextLevel(); // Advance to the next level
+        nextLevel(); // Advance to the next level (but only if clicked enough)
     }
 }
 
-// Function to progress through levels
+// Function to progress through levels (only if enough clicks)
 function nextLevel() {
     if (currentLevel < 3) {
         currentLevel++;
